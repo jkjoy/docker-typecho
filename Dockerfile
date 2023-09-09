@@ -1,4 +1,4 @@
-FROM php:8.1.2-apache
+FROM php:7.4.3-apache
 MAINTAINER noahgao "jkjoy@163.com"
 RUN apt-get update \
     && apt-get install sqlite3 libsqlite3-dev libmcrypt-dev curl libcurl4-openssl-dev php-zip --yes \
