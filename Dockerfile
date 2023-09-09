@@ -9,5 +9,5 @@ RUN apt-get update \
     && rm -rf /tmp/pear \
     && docker-php-ext-enable redis 
 COPY src/ /var/www/html/
-RUN chmod -R 755 /var/www/html/
+RUN chmod -R 0777 /var/www/html/
 EXPOSE 80
