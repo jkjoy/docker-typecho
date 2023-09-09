@@ -10,4 +10,7 @@ RUN apt-get update \
     && docker-php-ext-enable redis 
 COPY src/ /var/www/html/
 RUN chmod -R 0777 /var/www/html/
+WORKDIR /var/www/html/
+VOLUME /var/www/html/:/data
+
 EXPOSE 80
