@@ -1,5 +1,5 @@
 FROM php:7.4.33-apache
-MAINTAINER noahgao "jkjoy@163.com"
+MAINTAINER jkjoy "jkjoy@163.com"
 RUN apt-get update \
     && apt-get install sqlite3 libsqlite3-dev libmcrypt-dev curl libcurl4-openssl-dev zlib1g-dev libzip-dev zip --yes \
     && pecl install mcrypt-1.0.5 \
@@ -11,6 +11,5 @@ RUN apt-get update \
 COPY src/ /var/www/html/
 RUN chmod -R 0777 /var/www/html/
 WORKDIR /var/www/html/
-VOLUME /var/www/html/:/data
 
 EXPOSE 80
