@@ -31,6 +31,7 @@ RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 10M/g" /etc/php/8.2/fpm/
 RUN sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" /etc/php/8.2/fpm/pool.d/www.conf
 RUN sed -i -e "s/;listen.mode = 0660/listen.mode = 0666/g" /etc/php/8.2/fpm/pool.d/www.conf
 
+WORKDIR ${DOCUMENT_ROOT}
 RUN chown -R www-data:www-data ${DOCUMENT_ROOT}
 
 COPY default /etc/nginx/sites-available/default
