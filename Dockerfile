@@ -1,4 +1,4 @@
-From nginx:latest
+FROM nginx:latest
 MAINTAINER jkjoy <imsunpw@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
