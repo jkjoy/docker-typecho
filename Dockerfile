@@ -7,7 +7,7 @@ ENV DOCUMENT_ROOT /usr/share/nginx/html
 
 #Install nginx php-fpm php-pdo unzip curl
 RUN apt-get update 
-RUN apt-get -y install php8.2-fpm php8.2-zip  apt-utils php8.2-curl php8.2-gd php8.2-intl php-pear php8.2-imagick php8.2-imap php8.2-mcrypt php8.2-ps php8.2-pspell php8.2-sqlite php8.2-tidy php8.2-xmlrpc php8.2-xsl php8.2-mbstring git 
+RUN apt-get -y install php7.4-fpm php7.4-zip  apt-utils php7.4-curl php7.4-gd php7.4-intl php-pear php7.4-imagick php7.4-imap php7.4-mcrypt php7.4-ps php7.4-pspell php7.4-sqlite php7.4-tidy php7.4-xmlrpc php7.4-xsl php7.4-mbstring git 
 
 #RUN rm -rf ${DOCUMENT_ROOT}/*
 RUN git clone https://github.com/typecho/typecho.git 
@@ -25,11 +25,11 @@ RUN sed -i -e "s|include /etc/nginx/conf.d/\*.conf|include /etc/nginx/sites-enab
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # php-fpm config
-RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php/8.2/fpm/php.ini
-RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 10M/g" /etc/php/8.2/fpm/php.ini
-RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 10M/g" /etc/php/8.2/fpm/php.ini
-RUN sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" /etc/php/8.2/fpm/pool.d/www.conf
-RUN sed -i -e "s/;listen.mode = 0660/listen.mode = 0666/g" /etc/php/8.2/fpm/pool.d/www.conf
+RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php/7.4/fpm/php.ini
+RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 10M/g" /etc/php/7.4/fpm/php.ini
+RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 10M/g" /etc/php/7.4/fpm/php.ini
+RUN sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" /etc/php/7.4/fpm/pool.d/www.conf
+RUN sed -i -e "s/;listen.mode = 0660/listen.mode = 0666/g" /etc/php/7.4/fpm/pool.d/www.conf
 
 WORKDIR ${DOCUMENT_ROOT}
 RUN chown -R www-data:www-data ${DOCUMENT_ROOT}
@@ -41,4 +41,4 @@ RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 EXPOSE 80
 EXPOSE 443
 
-CMD service php8.2-fpm start && nginx
+CMD service php7.4-fpm start && nginx
