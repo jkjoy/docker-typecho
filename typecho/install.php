@@ -2,7 +2,7 @@
 
 if (!file_exists(dirname(__FILE__) . '/data/config.inc.php')) {
     // site root path
-    define('__TYPECHO_ROOT_DIR__', dirname(__FILE__));
+    define('__TYPECHO_ROOT_DIR__', '/app');
 
     // plugin directory (relative path)
     define('__TYPECHO_PLUGIN_DIR__', '/data/plugins');
@@ -251,7 +251,7 @@ function install_get_default_options(): array
             'title' => 'Hello World',
             'description' => 'Your description here.',
             'keywords' => 'typecho,php,blog',
-            'rewrite' => 0,
+            'rewrite' => 1,
             'frontPage' => 'recent',
             'frontArchive' => 0,
             'commentsRequireMail' => 1,
@@ -393,7 +393,7 @@ function install_config_file(string $adapter, string $dbPrefix, array $dbConfig,
 
     $code = "<" . "?php
 // site root path
-define('__TYPECHO_ROOT_DIR__', dirname(__FILE__));
+define('__TYPECHO_ROOT_DIR__', '/app');
 
 // plugin directory (relative path)
 define('__TYPECHO_PLUGIN_DIR__', '/data/plugins');
