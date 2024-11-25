@@ -28,7 +28,7 @@ RUN apk --update add --no-cache \
     php83-redis \
     php83-exif \
     php83-apcu \
-#    php83-yaf \
+    php83-tokenizer \
     php83-bz2 \
     php83-ctype \
     && rm -rf /var/cache/apk/*
@@ -55,8 +55,10 @@ RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php83/php.ini \
     && sed -i -e "s|;listen.owner = nobody|listen.owner = nginx|g" /etc/php83/php-fpm.d/www.conf \
     && sed -i -e "s|;listen.group = nobody|listen.group = nginx|g" /etc/php83/php-fpm.d/www.conf \
     && sed -i -e "s|user = nobody|user = nginx|g" /etc/php83/php-fpm.d/www.conf \
-    && sed -i -e "s|group = nobody|group = nginx|g" /etc/php83/php-fpm.d/www.conf
-RUN sed -i 's/;extension=ctype/extension=ctype/' /etc/php83/php.ini
+    && sed -i -e "s|group = nobody|group = nginx|g" /etc/php83/php-fpm.d/www.conf \
+    && sed -i 's/;extension=ctype/extension=ctype/' /etc/php83/php.ini \
+    && sed -i 's/;extension=tokenizer/extension=tokenizer/' /etc/php83/php.ini
+
 # Copy nginx configuration
 COPY default /etc/nginx/sites-available/default
 RUN mkdir -p /etc/nginx/sites-enabled \
@@ -69,6 +71,3 @@ RUN chmod +x /start.sh
 EXPOSE 80 443
 
 CMD ["/start.sh"]
-
-
-
