@@ -9,6 +9,24 @@ else
     echo "/app/data 目录不为空，跳过。"
 fi
 
+# 检查 /app/data/config.inc.php 是否存在
+if [ ! -f /app/data/config.inc.php ]; then
+    echo "config.inc.php 不存在"
+    cp -r /app/usr/* /app/data/
+    echo "文件复制完成。"
+else
+    echo "config.inc.php 存在，跳过。"
+fi
+
+# 检查 /app/data/themes 目录是否存在
+if [ ! -d /app/data/themes ]; then
+    echo "/app/data/themes 目录不存在"
+    cp -r /app/usr/themes /app/data/
+    echo "themes 目录复制完成。"
+else
+    echo "themes 目录存在，跳过。"
+fi
+
 # 设置 /app/data 目录的权限为可写
 chmod -R 777 /app/data
 
