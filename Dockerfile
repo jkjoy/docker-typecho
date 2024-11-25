@@ -18,9 +18,6 @@ RUN apk --update add --no-cache \
     php83-gd \
     php83-intl \
     php83-pear \
-    php83-imagick \
-    php83-imap \
-    php83-mcrypt \
     php83-tidy \
     php83-xsl \
     php83-mbstring \
