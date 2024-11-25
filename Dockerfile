@@ -21,10 +21,7 @@ RUN apk --update add --no-cache \
     php83-imagick \
     php83-imap \
     php83-mcrypt \
-    php83-ps \
-    php83-pspell \
     php83-tidy \
-    php83-xmlrpc \
     php83-xsl \
     php83-mbstring \
     git \
