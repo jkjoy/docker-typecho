@@ -2,8 +2,8 @@ FROM nginx:stable-alpine
 
 LABEL maintainer="jkjoy <imsunpw@gmail.com>"
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV DOCUMENT_ROOT /usr/share/nginx/html
+ENV DEBIAN_FRONTEND=noninteractive
+ENV DOCUMENT_ROOT=/usr/share/nginx/html
 
 # Update package list and install necessary packages
 RUN apk --update add --no-cache \
@@ -46,7 +46,7 @@ RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php83/php.ini \
     && sed -i -e "s/;listen.mode = 0660/listen.mode = 0666/g" /etc/php83/php-fpm.d/www.conf
 
 # Set permissions
-RUN chown -R www-data:www-data ${DOCUMENT_ROOT} \
+RUN chown -R nginx:nginx ${DOCUMENT_ROOT} \
     && chmod -R 755 ${DOCUMENT_ROOT}
 
 # Copy nginx configuration
