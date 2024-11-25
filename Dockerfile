@@ -7,7 +7,6 @@ ENV DOCUMENT_ROOT /usr/share/nginx/html
 
 # Update package list and install necessary packages
 RUN apk --update add --no-cache \
-    nginx \
     wget \
     unzip \
     php83 \
