@@ -1,11 +1,8 @@
 server {
-    listen       80;
+    listen   80;
     server_name  _;
-    root   /usr/share/nginx/html;
-
-    #charset koi8-r;
-    #access_log  /var/log/nginx/log/host.access.log  main;
-
+    root   /app/;
+    
     location / {
         index  index.php;
     }
@@ -23,11 +20,6 @@ server {
         rewrite ^(.+)$ /index.php last;
     }
 
-#    error_page   500 502 503 504  /50x.html;
-#    location = /50x.html {
-#        root   /usr/share/nginx/www;
-#    }
-
     location  ~ [^/]\.php(/|$) {
             fastcgi_buffer_size 128k;
             fastcgi_buffers 256 16k;
@@ -35,7 +27,7 @@ server {
             fastcgi_temp_file_write_size 256k;
             fastcgi_read_timeout 240;
             fastcgi_split_path_info ^(.+\.php)(/.+)$;
-            fastcgi_pass unix:/run/php/php7.4-fpm.sock;  
+            fastcgi_pass unix:/run/php-fpm83.sock;  
             fastcgi_index index.php;
             if (!-f $document_root$fastcgi_script_name) {
                 return 404;

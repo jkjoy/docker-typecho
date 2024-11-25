@@ -1,11 +1,9 @@
-version: '3.8'
-
 services:
-  web:
+  typecho:
     image: jkjoy/typecho
     container_name: typecho
     restart: always
     ports:
-      - '80:80'
+      - '8080:80'
     volumes:
-      - ./:/usr/share/nginx/html/usr
+      - ./data:/app/data
