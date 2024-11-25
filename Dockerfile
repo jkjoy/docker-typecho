@@ -5,30 +5,17 @@ LABEL maintainer="jkjoy <imsunpw@gmail.com>"
 ENV DEBIAN_FRONTEND noninteractive
 ENV DOCUMENT_ROOT /usr/share/nginx/html
 
-# Install necessary packages
-RUN apk add --no-cache \
-    wget \
-    unzip \
-    php7 \
-    php7-fpm \
-    php7-pdo \
-    php7-sqlite3 \
-    php7-zip \
-    php7-curl \
-    php7-gd \
-    php7-intl \
-    php7-pear \
-    php7-imagick \
-    php7-imap \
-    php7-mcrypt \
-    php7-ps \
-    php7-pspell \
-    php7-tidy \
-    php7-xmlrpc \
-    php7-xsl \
-    php7-mbstring \
-    git \
-    && rm -rf /var/cache/apk/*
+# Update package list
+RUN apk --update add --no-cache wget unzip
+
+# Install PHP and related packages
+RUN apk add --no-cache php7 php7-fpm php7-pdo php7-sqlite3 php7-zip php7-curl php7-gd php7-intl php7-pear php7-imagick php7-imap php7-mcrypt php7-ps php7-pspell php7-tidy php7-xmlrpc php7-xsl php7-mbstring
+
+# Install additional packages
+RUN apk add --no-cache git
+
+# Clean up
+RUN rm -rf /var/cache/apk/*
 
 WORKDIR ${DOCUMENT_ROOT}
 
