@@ -1,0 +1,21 @@
+[submodule "typecho/usr/themes/Chic"]
+	path = typecho/usr/themes/Chic
+	url = https://github.com/jkjoy/Typecho-Theme-Chic.git
+[submodule "typecho/usr/themes/Stack"]
+	path = typecho/usr/themes/Stack
+	url = https://github.com/jkjoy/Typecho-Theme-Stack.git
+[submodule "typecho/usr/themes/Fuwari"]
+	path = typecho/usr/themes/Fuwari
+	url = https://github.com/jkjoy/Typecho-Theme-Fuwari.git
+[submodule "typecho/usr/themes/Space"]
+	path = typecho/usr/themes/Space
+	url = https://github.com/jkjoy/typecho-theme-space.git
+[submodule "typecho/usr/themes/Smartisan"]
+	path = typecho/usr/themes/Smartisan
+	url = https://github.com/jkjoy/typecho-themes-Smartisan.git
+[submodule "typecho/usr/themes/Echo"]
+	path = typecho/usr/themes/Echo
+	url = https://github.com/jkjoy/echo.git
+[submodule "typecho/usr/themes/cactus"]
+	path = typecho/usr/themes/cactus
+	url = https://github.com/jkjoy/cactus.git
