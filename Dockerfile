@@ -56,7 +56,7 @@ RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php83/php.ini \
     && sed -i -e "s|user = nobody|user = nginx|g" /etc/php83/php-fpm.d/www.conf \
     && sed -i -e "s|group = nobody|group = nginx|g" /etc/php83/php-fpm.d/www.conf \
     && sed -i 's/;extension=ctype/extension=ctype/' /etc/php83/php.ini \
-    && sed -i 's/;extension=tokenizer/extension=tokenizer/' /etc/php83/php.ini
+    && sed -i 's/;extension=tokenizer/extension=tokenizer/' /etc/php83/php.ini \
     && sed -i -e 's/;extension=sockets/extension=sockets/g' \
     -e 's/;extension=sodium/extension=sodium/g' \
     -e 's/;extension=sqlite3/extension=sqlite3/g' \
