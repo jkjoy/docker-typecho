@@ -23,10 +23,11 @@ RUN apk --update add --no-cache \
     php83-opcache \
     php83-imap \
     php83-exif \
-    php83-tidy \ #typecho必须
     php83-pecl-imagick \
-    php83-ctype \ #typecho必须
-    php83-sockets \
+    php83-ctype \ 
+    php83-intl \
+    php83-tidy \
+    php83-tokenizer \
     && rm -rf /var/cache/apk/*
 
 COPY typecho/ /app
