@@ -1,19 +1,13 @@
 server {
     listen   80;
     server_name  _;
-    root   /app/;
+    root   /app;
     
     location / {
         index  index.php;
     }
 
     log_not_found off;
-
-    if ($host ~* ^www\.(.*))
-    {
-        set $host_without_www $1;
-        rewrite ^/(.*)$ $scheme://$host_without_www/$1 permanent;
-    }
 
     if (!-e $request_filename)
     {
