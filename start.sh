@@ -28,12 +28,15 @@ else
 fi
 
 # 设置 /app/data 目录的权限为可写
-chmod -R 777 /app/data
+echo "设置 /app/data 目录的权限为可写..."
+#chmod -R g+w /app/data
+chmod -R 775 /app/data  # 根据需求调整权限
 
 # 创建符号链接
 ln -sfn /app/data /app/usr
 ln -sfn /app/data/config.inc.php /app/config.inc.php
 
 # 启动 PHP-FPM 和 Nginx
+echo "启动 PHP-FPM 和 Nginx..."
 php-fpm83 -D
 nginx -g "daemon off;"
