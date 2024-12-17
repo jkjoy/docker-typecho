@@ -24,6 +24,7 @@ RUN apk --update add --no-cache \
     php83-imap \
     php83-exif \
     php83-pecl-imagick \
+    php83-ctype \
     && rm -rf /var/cache/apk/*
 
 COPY typecho/ /app
