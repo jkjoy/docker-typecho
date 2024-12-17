@@ -28,6 +28,7 @@ RUN apk --update add --no-cache \
     php83-intl \
     php83-tidy \
     php83-tokenizer \
+    php83-session \
     && rm -rf /var/cache/apk/*
 
 COPY typecho/ /app
