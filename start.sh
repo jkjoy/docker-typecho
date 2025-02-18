@@ -30,7 +30,8 @@ fi
 # 设置 /app/data 目录的权限为可写
 echo "设置 /app/data 目录的权限为可写..."
 #chmod -R g+w /app/data
-chmod -R 775 /app/data  # 根据需求调整权限
+chown -R 101:101 /app/data
+#chmod -R 775 /app/data  # 根据需求调整权限
 
 # 创建符号链接
 ln -sfn /app/data /app/usr

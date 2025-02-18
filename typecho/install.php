@@ -404,6 +404,9 @@ define('__TYPECHO_THEME_DIR__', '/data/themes');
 // admin directory (relative path)
 define('__TYPECHO_ADMIN_DIR__', '/admin/');
 
+// uploads directory (relative path)
+define('__TYPECHO_UPLOAD_DIR__', '/data/uploads/');
+
 // register autoload
 require_once __TYPECHO_ROOT_DIR__ . '/var/Typecho/Common.php';
 
