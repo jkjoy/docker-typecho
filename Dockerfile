@@ -2,8 +2,8 @@ FROM nginx:stable-alpine
 
 WORKDIR /app
 
-# Update package list and install necessary packages
-RUN apk --update add --no-cache \
+# Combine all RUN commands and install necessary packages
+RUN apk --no-cache add \
     php83 \
     php83-fpm \
     php83-pdo \
@@ -24,30 +24,27 @@ RUN apk --update add --no-cache \
     php83-imap \
     php83-exif \
     php83-pecl-imagick \
-    php83-ctype \ 
+    php83-ctype \
     php83-intl \
     php83-tidy \
     php83-tokenizer \
     php83-session \
+    && mkdir -p /etc/nginx/sites-enabled \
     && rm -rf /var/cache/apk/*
 
-COPY typecho/ /app
-
-# Set permissions
-RUN chown -R 101:101 /app \
-    && chmod -R 0755 /app 
-
-# Copy nginx configuration
+# Copy configuration files
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY php.ini /etc/php83/php.ini
 COPY www.conf /etc/php83/php-fpm.d/www.conf
 COPY default /etc/nginx/sites-available/default
-RUN mkdir -p /etc/nginx/sites-enabled \
-    && ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-
-# Copy and setup start script
 COPY start.sh /start.sh
-RUN chmod +x /start.sh
+COPY /app/ /app/
+
+# Set up permissions and symlinks in a single layer
+RUN chmod +x /start.sh \
+    && chown -R nginx:nginx /app \
+    && chmod -R 0755 /app \
+    && ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 EXPOSE 80
 
