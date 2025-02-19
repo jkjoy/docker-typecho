@@ -2,7 +2,11 @@ FROM nginx:stable-alpine
 
 WORKDIR /app
 
-# Combine all RUN commands and install necessary packages
+# Create data directory and set permissions during build
+RUN mkdir -p /app/data && \
+    chown -R nginx:nginx /app
+
+# Install packages
 RUN apk --no-cache add \
     php83 \
     php83-fpm \
@@ -25,7 +29,6 @@ RUN apk --no-cache add \
     php83-exif \
     php83-pecl-imagick \
     php83-ctype \
-    php83-intl \
     php83-tidy \
     php83-tokenizer \
     php83-session \
@@ -38,13 +41,13 @@ COPY php.ini /etc/php83/php.ini
 COPY www.conf /etc/php83/php-fpm.d/www.conf
 COPY default /etc/nginx/sites-available/default
 COPY start.sh /start.sh
-COPY /app/ /app/
+COPY typecho/ /app/
 
 # Set up permissions and symlinks in a single layer
 RUN chmod +x /start.sh \
     && chown -R nginx:nginx /app \
     && chmod -R 0755 /app \
-    && ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+    && ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 EXPOSE 80
 

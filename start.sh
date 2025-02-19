@@ -14,6 +14,16 @@ log_msg() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
 }
 
+# Create PHP-FPM socket directory if it doesn't exist
+if [ ! -d /run ]; then
+# Copy files from source to destination directory, logging the given message
+# $1: source directory
+# $2: destination directory
+# $3: message to log
+    mkdir -p /run
+    chown nginx:nginx /run
+fi
+
 # Function to copy files with logging
 copy_files() {
     local src="$1"
@@ -22,20 +32,6 @@ copy_files() {
     
     cp -r "$src" "$dst"
     log_msg "$msg"
-}
-
-# Function to set permissions
-set_permissions() {
-    log_msg "Setting permissions for ${DATA_DIR}..."
-    chown -R nginx:nginx "$DATA_DIR"
-    chmod -R 775 "$DATA_DIR"
-}
-
-# Function to create symbolic links
-create_symlinks() {
-    log_msg "Creating symbolic links..."
-    ln -sfn "$DATA_DIR/" "$USR_DIR/"
-    ln -sfn "$CONFIG_FILE" "/app/config.inc.php"
 }
 
 # Initialize data directory if empty
@@ -53,9 +49,10 @@ if [ ! -d "$THEMES_DIR" ]; then
     copy_files "${USR_DIR}/themes" "$DATA_DIR" "Themes directory copied successfully"
 fi
 
-# Set permissions and create symlinks
-set_permissions
-create_symlinks
+# Create symbolic links
+log_msg "Creating symbolic links..."
+ln -sfn "$DATA_DIR/" "$USR_DIR/"
+ln -sfn "$CONFIG_FILE" "/app/config.inc.php"
 
 # Start services
 log_msg "Starting PHP-FPM and Nginx..."
