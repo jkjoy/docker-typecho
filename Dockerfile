@@ -41,7 +41,7 @@ COPY php.ini /etc/php83/php.ini
 COPY www.conf /etc/php83/php-fpm.d/www.conf
 COPY default /etc/nginx/sites-available/default
 COPY start.sh /start.sh
-COPY typecho/ /app/
+COPY /app/ /app/
 
 # Set up permissions and symlinks in a single layer
 RUN chmod +x /start.sh \
