@@ -34,8 +34,8 @@ RUN apk --update add --no-cache \
 COPY typecho/ /app
 
 # Set permissions
-RUN chown -R nginx:nginx /app \
-    && chmod -R 755 /app 
+RUN chown -R 101:101 /app \
+    && chmod -R 0755 /app 
 
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf

@@ -34,7 +34,7 @@ chown -R 101:101 /app/data
 #chmod -R 775 /app/data  # 根据需求调整权限
 
 # 创建符号链接
-ln -sfn /app/data /app/usr
+ln -sfn /app/data/ /app/usr/
 ln -sfn /app/data/config.inc.php /app/config.inc.php
 
 # 启动 PHP-FPM 和 Nginx
