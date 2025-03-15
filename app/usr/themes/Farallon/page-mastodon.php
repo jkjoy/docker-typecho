@@ -14,7 +14,8 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
     <article class="post--single">
     <?php $tooot = $this->fields->tooot ? $this->fields->tooot : 'https://bbapi.ima.cm'; ?>
     <script src="<?php $this->options->themeUrl('/dist/js/marked.min.js'); ?>"></script>
-    <script src="<?php $this->options->themeUrl('/dist/js/view-image.min.js'); ?>"></script>
+    <link rel="stylesheet" href="<?php $this->options->themeUrl('/dist/css/lightbox.min.css'); ?>">
+    <script src="<?php $this->options->themeUrl('/dist/js/lightbox-plus-jquery.min.js'); ?>"></script>
     <div id="tooot"></div>
     <div class="nav-links" id="loadmore">
         <span class="loadmore">加载更多</span>
@@ -24,16 +25,24 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
 window.onload = function() {
     let offset = 0; // 初始偏移量
     const limit = 20; // 每次加载的数量
+
     function formatHTML(toots) {
         let htmlString = '';      
         toots.forEach(toot => {
-            const { content, account, url, created_at, media_attachments} = toot;
+            // 判断是否存在 reblog
+            const isReblog = toot.reblog && toot.reblog.content;
+            const content = isReblog ? toot.reblog.content : toot.content;
+            const url = isReblog ? toot.reblog.url : toot.url;
+            const account = isReblog ? toot.reblog.account : toot.account;
+            const created_at = isReblog ? toot.reblog.created_at : toot.created_at;
+            const media_attachments = isReblog ? toot.reblog.media_attachments : toot.media_attachments;
+
             let mediaHTML = ''; // 初始化资源相关HTML为空字符串
             // 处理媒体附件
             if (media_attachments.length > 0) {
                 media_attachments.forEach(attachment => {
                     if (attachment.type === 'image') {
-                        mediaHTML += `<a href="${attachment.url}" target="_blank"><img src="${attachment.preview_url}" class="thumbnail-image img" ></a>`;
+                        mediaHTML += `<a href="${attachment.url}" target="_blank" data-lightbox="image-set"><img src="${attachment.preview_url}" class="thumbnail-image img" ></a>`;
                     }
                 });
             }
@@ -81,13 +90,11 @@ window.onload = function() {
     // 绑定“加载更多”按钮的点击事件
     document.getElementById('loadmore').addEventListener('click', fetchAndDisplayToots);
 };
-window.ViewImage && ViewImage.init('.content img');
 </script>         
 <style>
 div pre code {
-  /* 迫使文字断行 */
-  white-space: pre-wrap; /* CSS3 */
-  word-wrap: break-word; /* 老版本的浏览器 */
+  white-space: pre-wrap;  
+  word-wrap: break-word; 
   overflow-wrap: break-word;  
   word-break: break-all;  
   word-break: break-word;  

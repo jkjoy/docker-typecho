@@ -7,10 +7,6 @@ function themeConfig($form) {
     $form->addInput($icoUrl);
     $sticky = new Typecho_Widget_Helper_Form_Element_Text('sticky', NULL, NULL, _t('置顶文章cid'), _t('多篇文章以`|`符号隔开'), _t('会在首页展示置顶文章。'));
     $form->addInput($sticky);
-    $showProfile = new Typecho_Widget_Helper_Form_Element_Radio('showProfile',
-    array('0'=> _t('否'), '1'=> _t('是')),
-    '0', _t('是否在文章页面显示作者信息'), _t('选择“是”将在文章页面包含显示作者信息。'));
-    $form->addInput($showProfile);
     $instagramurl = new Typecho_Widget_Helper_Form_Element_Text('instagramurl', NULL, 'https://Instagram.com/', _t('Instagram'), _t('会在个人信息显示'));
     $form->addInput($instagramurl);
     $telegramurl = new Typecho_Widget_Helper_Form_Element_Text('telegramurl', NULL, 'https://t.me/', _t('电报'), _t('会在个人信息显示'));
@@ -29,22 +25,20 @@ function themeConfig($form) {
     $form->addInput($midimg);
     $donate = new Typecho_Widget_Helper_Form_Element_Text('donate', NULL, 'https://blogcdn.loliko.cn/donate/wx.png', _t('赞赏二维码'), _t('不填写则不显示'));
     $form->addInput($donate);
-    $doubanID = new Typecho_Widget_Helper_Form_Element_Text('doubanID', NULL, 'https://db.imsun.org/', _t('豆瓣页面必需API,包含"/"'), _t('使用豆瓣页面时需要设置'));
-    $form->addInput($doubanID);
     $twikoo = new Typecho_Widget_Helper_Form_Element_Textarea('twikoo', NULL, NULL, _t('引用第三方评论'), _t('不填写则不显示'));
     $form->addInput($twikoo);
     $addhead = new Typecho_Widget_Helper_Form_Element_Textarea('addhead', NULL, NULL, _t('添加head'), _t('支持HTML'));
     $form->addInput($addhead);
     $tongji = new Typecho_Widget_Helper_Form_Element_Textarea('tongji', NULL, NULL, _t('统计代码'), _t('支持HTML'));
     $form->addInput($tongji);
+    $showProfile = new Typecho_Widget_Helper_Form_Element_Radio('showProfile',
+    array('0'=> _t('否'), '1'=> _t('是')),
+    '0', _t('是否在文章页面显示作者信息'), _t('选择“是”将在文章页面包含显示作者信息。'));
+    $form->addInput($showProfile);
     $showcate = new Typecho_Widget_Helper_Form_Element_Radio('showcate',
     array('0'=> _t('否'), '1'=> _t('是')),
     '0', _t('是否在文章页面显示文章分类'), _t('选择“是”将在文章页面显示文章的分类信息。'));
     $form->addInput($showcate);
-    $showallwords = new Typecho_Widget_Helper_Form_Element_Radio('showallwords',
-    array('0'=> _t('否'), '1'=> _t('是')),
-    '0', _t('是否显示归档字数统计'), _t('选择“是”将在归档页面显示全站总字数。'));
-    $form->addInput($showallwords);
     $showrelated = new Typecho_Widget_Helper_Form_Element_Radio('showrelated',
     array('0'=> _t('否'), '1'=> _t('是')),
     '0', _t('是否显示相关文章'), _t('选择“是”将在文章页面显示相关文章。'));
@@ -57,10 +51,6 @@ function themeConfig($form) {
     array('0'=> _t('否'), '1'=> _t('是')),
     '0', _t('是否显示页面加载时间'), _t('选择“是”将在页脚显示加载时间。'));
     $form->addInput($showtime);
-    $qqboturl = new Typecho_Widget_Helper_Form_Element_Text('qqboturl', NULL, 'https://bot.asbid.cn', _t('QQ机器人API,保持默认则需添加 2280858259 为好友'), _t('基于cqhttp,有评论时QQ通知'));
-    $form->addInput($qqboturl);
-    $qqnum = new Typecho_Widget_Helper_Form_Element_Text('qqnum', NULL, '80116747', _t('QQ号码'), _t('用于接收QQ通知的号码'));
-    $form->addInput($qqnum);
 } 
 function get_post_view($archive) {
     $cid = $archive->cid;
@@ -117,70 +107,6 @@ function timer_start() {
     return $r;
     }
 
-/*
- * 全站字数
- */
-function allwords() {
-    $chars = 0;
-    $db = Typecho_Db::get();
-    $select = $db ->select('text')->from('table.contents');//如果只要统计文章总字数不要统计单页的话可在后面加入->where('type = ?','post')
-    $rows = $db->fetchAll($select);
-    foreach ($rows as $row) { $chars += mb_strlen(trim($row['text']), 'UTF-8'); }
-    if($chars<50000){
-    echo '全站共 '.$chars.' 字,还在努力更新中,加油！加油啦！';}
-    elseif ($chars<70000 && $chars>50000){
-    echo '全站共 '.$chars.' 字，写完一本埃克苏佩里的《小王子》了！';}
-    elseif ($chars<90000 && $chars>70000){
-    echo '全站共 '.$chars.' 字，写完一本鲁迅的《呐喊》了！';}
-    elseif ($chars<100000 && $chars>90000){
-    echo '全站共 '.$chars.' 字，写完一本林海音的《城南旧事》了！';}
-    elseif ($chars<110000 && $chars>100000){
-    echo '全站共 '.$chars.' 字，写完一本马克·吐温的《王子与乞丐》了！';}
-    elseif ($chars<120000 && $chars>110000){
-    echo '全站共 '.$chars.' 字，写完一本鲁迅的《彷徨》了！';}
-    elseif ($chars<130000 && $chars>120000){
-    echo '全站共 '.$chars.' 字，写完一本余华的《活着》了！';}
-    elseif ($chars<140000 && $chars>130000){
-    echo '全站共 '.$chars.' 字，写完一本曹禺的《雷雨》了！';}
-    elseif ($chars<150000 && $chars>140000){
-    echo '全站共 '.$chars.' 字，写完一本史铁生的《宿命的写作》了！';}
-    elseif ($chars<160000 && $chars>150000){
-    echo '全站共 '.$chars.' 字，写完一本伯内特的《秘密花园》了！';}
-    elseif ($chars<170000 && $chars>160000){
-    echo '全站共 '.$chars.' 字，写完一本曹禺的《日出》了！';}
-    elseif ($chars<180000 && $chars>170000){
-    echo '全站共 '.$chars.' 字，写完一本马克·吐温的《汤姆·索亚历险记》了！';}
-    elseif ($chars<190000 && $chars>180000){
-    echo '全站共 '.$chars.' 字，写完一本沈从文的《边城》了！';}
-    elseif ($chars<200000 && $chars>190000){
-    echo '全站共 '.$chars.' 字，写完一本亚米契斯的《爱的教育》了！';}
-    elseif ($chars<210000 && $chars>200000){
-    echo '全站共 '.$chars.' 字，写完一本巴金的《寒夜》了！';}
-    elseif ($chars<220000 && $chars>210000){
-    echo '全站共 '.$chars.' 字，写完一本东野圭吾的《解忧杂货店》了！';}
-    elseif ($chars<230000 && $chars>220000){
-    echo '全站共 '.$chars.' 字，写完一本莫泊桑的《一生》了！';}
-    elseif ($chars<250000 && $chars>230000){
-    echo '全站共 '.$chars.' 字，写完一本简·奥斯汀的《傲慢与偏见》了！';}
-    elseif ($chars<280000 && $chars>250000){
-    echo '全站共 '.$chars.' 字，写完一本钱钟书的《围城》了！';}
-    elseif ($chars<300000 && $chars>280000){
-    echo '全站共 '.$chars.' 字，写完一本张炜的《古船》了！';}
-    elseif ($chars<310000 && $chars>300000){
-    echo '全站共 '.$chars.' 字，写完一本茅盾的《子夜》了！';}
-    elseif ($chars<320000 && $chars>310000){
-    echo '全站共 '.$chars.' 字，写完一本阿来的《尘埃落定》了！';}
-    elseif ($chars<340000 && $chars>320000){
-    echo '全站共 '.$chars.' 字，写完一本艾米莉·勃朗特的《呼啸山庄》了！';}
-    elseif ($chars<350000 && $chars>340000){
-    echo '全站共 '.$chars.' 字，写完一本雨果的《巴黎圣母院》了！';}
-    elseif ($chars<400000 && $chars>350000){
-    echo '全站共 '.$chars.' 字，写完一本东野圭吾的《白夜行》了！';}
-    elseif ($chars<1000000 && $chars>400000){
-    echo '全站共 '.$chars.' 字，写完一本我国著名的四大名著了！';}
-    elseif ($chars>1000000){
-    echo '全站共 '.$chars.' 字，已写一本列夫·托尔斯泰的《战争与和平》了！';}
-} 
 function img_postthumb($cid) {
     $db = Typecho_Db::get();
     $rs = $db->fetchRow($db->select('table.contents.text')
@@ -207,63 +133,104 @@ function getPermalinkFromCoid($coid) {
 	if (empty($row)) return '';
 	return '<a href="#comment-'.$coid.'" style="text-decoration: none;">@'.$row['author'].'</a>';
 }
-// 评论提交通知函数
-function notifyQQBot($comment) {
-    $options = Helper::options();
-    // 检查评论是否已经审核通过
-    if ($comment->status != "approved") {
-        error_log('Comment is not approved.');
-        return;
-    } 
-    // 获取配置中的QQ机器人API地址
-    $cq_url = $options->qqboturl;
-    // 检查API地址是否为空
-    if (empty($cq_url)) {
-        error_log('QQ Bot URL is empty. Using default URL.');
-        $cq_url = 'https://bot.asbid.cn';
+
+/**
+ * 图片灯箱
+ */
+class ImageStructureProcessor {
+    public static function processContent($content, $widget) {
+        // 首先检查内容是否为空
+        if (empty($content) || !is_string($content)) {
+            return $content;
+        }
+
+        if ($widget instanceof Widget_Archive) {
+            try {
+                // 使用 DOM 操作确保结构完整性
+                $dom = new DOMDocument('1.0', 'UTF-8');
+                
+                // 添加错误处理
+                libxml_use_internal_errors(true);
+                
+                // 添加基础 HTML 结构以确保正确解析
+                $content = '<div>' . $content . '</div>';
+                
+                // 转换编码并加载内容
+                $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
+                $dom->loadHTML($content, 
+                    LIBXML_HTML_NOIMPLIED | 
+                    LIBXML_HTML_NODEFDTD | 
+                    LIBXML_NOERROR | 
+                    LIBXML_NOWARNING
+                );
+
+                $xpath = new DOMXPath($dom);
+                
+                // 查找所有没有父 figure 的图片
+                $images = $xpath->query("//img[not(ancestor::figure)]");
+                
+                if ($images->length > 0) {
+                    foreach ($images as $img) {
+                        // 获取必要的属性
+                        $src = $img->getAttribute('src');
+                        $alt = $img->getAttribute('alt');
+                        
+                        if (empty($src)) {
+                            continue; // 跳过没有 src 的图片
+                        }
+
+                        // 创建容器元素
+                        $figure = $dom->createElement('figure');
+                        $figure->setAttribute('class', 'grap--figure');
+                        
+                        // 创建链接元素用于lightbox
+                        $link = $dom->createElement('a');
+                        $link->setAttribute('href', $src);
+                        $link->setAttribute('data-lightbox', 'image-set');
+                        $link->setAttribute('data-title', $alt);
+                        $link->setAttribute('class', 'no-style-link');
+                        
+                        // 只有在有 alt 属性时才创建 figcaption
+                        if (!empty($alt)) {
+                            $caption = $dom->createElement('figcaption', $alt);
+                            $caption->setAttribute('class', 'imageCaption');
+                        }
+                        
+                        // 重组 DOM 结构
+                        if ($img->parentNode) {
+                            $img->parentNode->replaceChild($figure, $img);
+                            $link->appendChild($img);
+                            $figure->appendChild($link);
+                            if (isset($caption)) {
+                                $figure->appendChild($caption);
+                            }
+                        }
+                    }
+                }
+                
+                // 获取处理后的内容
+                $content = $dom->saveHTML();
+                
+                // 清理临时添加的 div 标签
+                $content = preg_replace('/^<div>|<\/div>$/i', '', $content);
+                
+                // 清理 libxml 错误
+                libxml_clear_errors();
+                
+            } catch (Exception $e) {
+                // 记录错误但返回原始内容
+                error_log('Image processing error: ' . $e->getMessage());
+                return $content;
+            }
+        }
+        
+        return $content;
     }
-    // 获取QQ号码
-    $qqnum = $options->qqnum;
-    // 检查QQ号码是否为空
-    if (empty($qqnum)) {
-        error_log('QQ number is empty.');
-        return;
-    }
-    // 如果是管理员自己发的评论则不发送通知
-    if ($comment->authorId === $comment->ownerId) {
-        error_log('This comment is by the post owner.');
-        return;
-    }
-    // 构建消息内容
-    $msg = '「' . $comment->author . '」在文章《' . $comment->title . '》中发表了评论！';
-    $msg .= "\n评论内容:\n{$comment->text}\n永久链接地址：{$comment->permalink}";
-    // 准备发送消息的数据
-    $_message_data_ = [
-        'user_id' => (int) trim($qqnum),
-        'message' => str_replace(["\r\n", "\r", "\n"], "\r\n", htmlspecialchars_decode(strip_tags($msg)))
-    ];
-    // 输出调试信息
-    error_log('Sending message to QQ Bot: ' . print_r($_message_data_, true));
-    // 初始化Curl请求
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => "{$cq_url}/send_msg?" . http_build_query($_message_data_, '', '&'),
-        CURLOPT_CONNECTTIMEOUT => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_HEADER => false,
-        CURLOPT_SSL_VERIFYPEER => false,
-        CURLOPT_SSL_VERIFYHOST => 0
-    ]);
-    $response = curl_exec($ch);
-    if (curl_errno($ch)) {
-        error_log('Curl error: ' . curl_error($ch));
-    } else {
-        error_log('Response: ' . $response);
-    }
-    curl_close($ch);
 }
-Typecho_Plugin::factory('Widget_Feedback')->finishComment = 'notifyQQBot';
+
+Typecho_Plugin::factory('Widget_Abstract_Contents')->contentEx = function($content, $widget) {
+    return ImageStructureProcessor::processContent($content, $widget);
+};
 
 //获取文章卡片
 function get_article_info($atts) {
@@ -385,3 +352,75 @@ EOF;
 // 注册编辑器按钮钩子
 Typecho_Plugin::factory('admin/write-post.php')->bottom = array('EditorButton', 'render');
 Typecho_Plugin::factory('admin/write-page.php')->bottom = array('EditorButton', 'render');
+
+/**    
+ * 评论者认证等级 + 身份    
+ *    
+ * @author Chrison    
+ * @access public    
+ * @param str $email 评论者邮址    
+ * @return result     
+ */     
+function commentApprove($widget, $email = NULL)      
+{   
+    $result = array(
+        "state" => -1,//状态
+        "isAuthor" => 0,//是否是博主
+        "userLevel" => '',//用户身份或等级名称
+        "userDesc" => '',//用户title描述
+        "bgColor" => '',//用户身份或等级背景色
+        "commentNum" => 0//评论数量
+    );
+    if (empty($email)) return $result;      
+    $result['state'] = 1;     
+    if ($widget->authorId == $widget->ownerId) {      
+        $result['isAuthor'] = 1;
+        $result['userLevel'] = '作者';
+        $result['userDesc'] = '博主';
+        $result['bgColor'] = '#FFD700';
+        $result['commentNum'] = 999;
+    } else {
+        $db = Typecho_Db::get();
+        $commentNumSql = $db->fetchAll($db->select(array('COUNT(cid)'=>'commentNum'))
+            ->from('table.comments')
+            ->where('mail = ?', $email));
+        $commentNum = $commentNumSql[0]['commentNum'];
+        $linkSql = $db->fetchAll($db->select()->from('table.links')
+            ->where('user = ?',$email));
+        if($commentNum==1){
+            $result['userLevel'] = '初识';
+            $result['bgColor'] = '#999999';
+            $userDesc = '初来乍到的新朋友';
+        } else {
+            if ($commentNum<3 && $commentNum>1) {
+                $result['userLevel'] = '初识';
+                $result['bgColor'] = '#999999';
+            }elseif ($commentNum<9 && $commentNum>=3) {
+                $result['userLevel'] = '朋友';
+                $result['bgColor'] = '#A0DAD0';
+            }elseif ($commentNum<27 && $commentNum>=9) {
+                $result['userLevel'] = '好友';
+                $result['bgColor'] = '#FF8C00';
+            }elseif ($commentNum<81 && $commentNum>=27) {
+                $result['userLevel'] = '挚友';
+                $result['bgColor'] = '#FF0000';
+            }elseif ($commentNum<100 && $commentNum>=81) {
+                $result['userLevel'] = '兄弟';
+                $result['bgColor'] = '#006400';
+            }elseif ($commentNum>=100) {
+                $result['userLevel'] = '老铁';
+                $result['bgColor'] = '#A0DAD0';
+            }
+             $userDesc = '已有'.$commentNum.'条评论'; 
+        }
+        if($linkSql){
+            $result['userLevel'] = '博友';
+            $result['bgColor'] = '#21b9bb';
+            $userDesc = '🔗'.$linkSql[0]['description'].'&#10;✌️'.$userDesc;
+        }
+        
+        $result['userDesc'] = $userDesc;
+        $result['commentNum'] = $commentNum;
+    } 
+    return $result;
+}

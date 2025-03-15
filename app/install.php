@@ -13,6 +13,8 @@ if (!file_exists(dirname(__FILE__) . '/data/config.inc.php')) {
     // admin directory (relative path)
     define('__TYPECHO_ADMIN_DIR__', '/admin/');
 
+    // upload directory (relative path)
+    define('__TYPECHO_UPLOAD_DIR__', '/data/uploads/');
     // register autoload
     require_once __TYPECHO_ROOT_DIR__ . '/var/Typecho/Common.php';
 

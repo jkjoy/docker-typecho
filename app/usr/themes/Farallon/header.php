@@ -1,15 +1,12 @@
 <?php 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
 <!DOCTYPE HTML>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="<?php $this->options->charset(); ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php if($this->_currentPage>1) echo '第 '.$this->_currentPage.' 页 - '; ?><?php $this->archiveTitle(array(
             'category'  =>  _t('分类 %s 下的文章'),
             'search'    =>  _t('包含关键字 %s 的文章'),
@@ -25,7 +22,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
     <?php $this->options->addhead(); ?>
 </head>
 <body>
-<script>
+    <script>
         window.DEFAULT_THEME = "light";
         if (localStorage.getItem("theme") == null) {
             localStorage.setItem("theme", window.DEFAULT_THEME);
@@ -62,14 +59,14 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
             </ul>
 		</nav>
                     <!-- 这年头谁会用站内的搜索啊      --> 
-        <div class="search--area">
-            <form id="search" method="post" action="./" role="search" class="search-form">
-            <label>
-				<input type="text" name="s" class="search-field text" placeholder="Search" required/>
-            </label>
-                <button type="submit" class="search-submit submit">搜索</button>
-			</form>                 
-        </div>
+            <div class="search--area">
+                <form id="search" method="post" action="./" role="search" class="search-form">
+                    <label>
+				        <input type="text" name="s" class="search-field text" placeholder="Search" required/>
+                    </label>
+                    <button type="submit" class="search-submit submit">搜索</button>
+			    </form>                 
+            </div>
         </div> 
     </div>
      <svg class="svgIcon" width="25" height="25" data-action="show-search">
